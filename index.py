@@ -24,11 +24,12 @@ day_length_milliseconds = 24 * 60 * 60 * 1000
 now = datetime.datetime.now()
 epoch = [2022, 1, 1, 0, 0, 0,]
  #days_since_epoch = now - epoch
-print(now)
+#definine time in this moment.
 now = [now.year, now.day, now.month, now.hour, now.minute, now.second]
 print (day_length_milliseconds)
-
+# subtract daytime (not done)  
 d = datetime.datetime.today() - timedelta(days=2)
-print("now")
+#just for me so I can see what d is a lot easier.
+print("d is:")
 print(d)
 print(now)
