@@ -53,6 +53,7 @@ d2 =  today-d1
 
 day_length_milliseconds = 24 * 60 * 60 * 1000
 days_since_epoch = d2 / day_length_milliseconds
+# * 1000 so it would be (to example) 180.0 days instead of 0.180
 days_since_epoch = days_since_epoch * 1000
 
 print(days_since_epoch)
