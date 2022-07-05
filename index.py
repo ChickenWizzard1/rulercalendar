@@ -20,13 +20,8 @@
 
 import datetime
 import math
-def time_to_int(dateobj):
-    total = int(dateobj.strftime('%S'))
-    total += int(dateobj.strftime('%M')) * 60
-    total += int(dateobj.strftime('%H')) * 60 * 60
-    total += (int(dateobj.strftime('%j')) - 1) * 60 * 60 * 24
-    total += (int(dateobj.strftime('%Y')) - 1970) * 60 * 60 * 24 * 365
-    return total
+import time_module
+from time_module import time_to_int
 
 today = datetime.date.today()
 d1 = datetime.date(year=2022, month=1, day=1)
@@ -36,7 +31,6 @@ d2 =  today-d1
 
 day_length_milliseconds = 24 * 60 * 60 * 1000
 days_since_epoch = d2 / day_length_milliseconds
-# * 1000 so it would be (to example) 180.0 days instead of 0.180
 days_since_epoch = days_since_epoch * 1000
 
 print(days_since_epoch)
