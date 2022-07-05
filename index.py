@@ -16,24 +16,7 @@
             rc_minutes_floor = Math.floor(rc_minutes)
 
             rc_seconds = (rc_minutes - rc_minutes_floor) * 60
-            rc_seconds_floor = Math.floor(rc_seconds)
-import math
-import datetime
-from datetime import timedelta
-day_length_milliseconds = 24 * 60 * 60 * 1000
-now = datetime.datetime.today()
-epoch = datetime.datetime(2022, 1, 1, 0, 0, 0)
-d = (now - epoch)
- #just for me so I can see what d is a lot easier.
-print("d is:")
-print(d)
-print(now)
-days_since_epoch= d / day_length_milliseconds
-print (day_length_milliseconds)
-print(days_since_epoch)
-rc_years = days_since_epoch / 30.4375
-print(rc_years)"""
-#import pandas as pd
+            rc_seconds_floor = Math.floor(rc_seconds)"""
 
 import datetime
 import math
