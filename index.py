@@ -1,42 +1,88 @@
-"""var days_since_epoch = (now.getTime() - epoch.getTime() ) / day_length_milliseconds
+import os
+token = os.environ['TOKEN']
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 
-            rc_years = days_since_epoch / 30.4375
-            rc_years_floor = Math.floor(rc_years)
+chrome_options = Options()
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--disable-dev-shm-usage')
 
-            rc_months = (rc_years - rc_years_floor) * 12
-            rc_months_floor = Math.floor(rc_months)
+driver = webdriver.Chrome(options=chrome_options)
+driver.get("https://rulercalendar.coolo2.repl.co/")
+rc_time = driver.find_element(By.XPATH, "//span[@id='time-small']").text
+#rc_time = "Rulercraft  time is:", rc_time
+rl_time = driver.find_element(By.XPATH, "//span[@id='rl-time-small']").text
+#rl_time =  "Real time is:", rl_time
+print(rc_time)
+print("In GMT:", rl_time)
+time_command = driver.find_element(By.XPATH, "//span[@id='time-small']").text, driver.find_element(By.XPATH, "//span[@id='rl-time-small']").text, "in gmt"
+help_command = "Do _time in the Afrea server to convert Rulercraft time to Realtime"
+import discord
 
-            rc_days = (rc_months - rc_months_floor) * 30.4375
-            rc_days_floor = Math.floor(rc_days)
+from discord.ext import commands
 
-            rc_hours = (rc_days - rc_days_floor) * 24
-            rc_hours_floor = Math.floor(rc_hours)
+from webserver import keep_alive
 
-            rc_minutes = (rc_hours - rc_hours_floor) * 60
-            rc_minutes_floor = Math.floor(rc_minutes)
+client = commands.Bot(command_prefix = "_")
 
-            rc_seconds = (rc_minutes - rc_minutes_floor) * 60
-            rc_seconds_floor = Math.floor(rc_seconds)"""
+client.remove_command('help')
 
-import datetime
-import math
-import time_module
-from time_module import time_to_int
+@client.event
 
-today = datetime.date.today()
-d1 = datetime.date(year=2022, month=1, day=1)
-d1 = time_to_int(d1)
-today  = time_to_int(today)
-d2 =  today-d1
+async def on_ready():
 
-day_length_milliseconds = 24 * 60 * 60 * 1000
-days_since_epoch = d2 / day_length_milliseconds
-days_since_epoch = days_since_epoch * 1000
+    print("Bot is currently online!")
 
-print(days_since_epoch)
-rc_years = days_since_epoch / 30.4375
-rc_years_floor = math.floor(rc_years)
-rc_months = (rc_years - rc_years_floor) * 12
-rc_months_floor = math.floor(rc_months)
-print(rc_years, rc_months)
-print(rc_years_floor, rc_months_floor)
+
+    #help command
+
+    @client.command(pass_context=True)
+
+    async def help(ctx):
+
+        author = ctx.message.author
+
+        embed = discord.Embed(
+
+            colour = discord.Colour.orange()
+
+        )
+
+        embed.set_author(name="Help")
+
+        embed.add_field(name="Help", value=help_command, inline=False)
+
+        channel = await author.create_dm()
+
+        await channel.send(author,embed=embed)
+
+        await ctx.message.channel.send(author,embed=embed)
+
+    @client.command(pass_context=True)
+
+    async def time(ctx):
+
+        author = ctx.message.author
+
+        embed = discord.Embed(
+
+            colour = discord.Colour.orange()
+
+        )
+        embed.set_author(name="Whats the time?")
+
+        embed.add_field(name="Whats the time in RC / Realtime?", value=time_command, inline=False)
+
+        channel = await author.create_dm()
+
+        await channel.send(author,embed=embed)
+
+        await ctx.message.channel.send(author,embed=embed)
+
+
+keep_alive()
+
+TOKEN = os.environ['TOKEN']
+
+client.run(TOKEN)
